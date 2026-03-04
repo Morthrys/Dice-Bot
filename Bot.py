@@ -61,12 +61,10 @@ def parse_complex_expression(expr: str):
                 f"**{r}**" if r == 1 or r == die else str(r)
                 for r in rolls
             )
-            # colchetes grudados no dado
             desc_parts.append(f"[{rolls_fmt}] {num}d{die}")
             i += len(term)
         else:
             ch = expr[i]
-            # operadores com espaçamento
             if ch in "+-*/":
                 desc_parts.append(f" {ch} ")
             else:
@@ -95,7 +93,7 @@ def get_range_name(pure_roll: int, min_possible: int, max_possible: int):
 def is_valid_dice_expr(content: str):
     # Aceita a/A prefixo e termos dados + operadores e parênteses
     pattern = re.compile(r"^[aA]?[\d\s+#d\+\-\*/().]+$")
-    # Deve conter pelo menos um dado válido
+    
     if not re.search(r'\d*d\d+', content.lower()):
         return False
     return bool(pattern.fullmatch(content.strip()))
@@ -136,7 +134,7 @@ async def on_message(message):
         if prefix.isdigit():
             rolls = int(prefix)
 
-    # Se o expr ainda começar com 'a' removemos só uma vez (ex: a3d20)
+    # Se o expr ainda começar com 'a' remove só uma vez (ex: a3d20)
     if expr.startswith('a'):
         expr = expr[1:]
 
@@ -222,7 +220,7 @@ async def on_message(message):
 async def main():
     async with bot:
         await bot.load_extension('dicestyle')
-        await bot.start('TOKEN BOT') # Substitua pelo Token do seu Bot
+        await bot.start('Token Bot') # Substitua pelo Token do seu Bot
 
 if __name__ == "__main__":
     asyncio.run(main())
